@@ -85,5 +85,28 @@ public class LibraryService{
         System.out.println("Book borrowed Successfully: "+ book);
     }
 
+    public void returnBook(int bookId)
+    {
+        for(Transaction transaction:transactions)
+        {
+            if(transaction.getBookId()==bookId && transaction.getReturnDate()==null)
+            {
+                transaction.setReturnDate(java.time.LocalDate.now());
+
+                for(Book book:books)
+                {
+                    if(book.getId()==bookId)
+                    {
+                        book.setAvailable(true);
+                        break;
+                    }
+                }
+                System.out.println("Book returned Successfully");
+                return;
+            }
+        }
+        System.out.println("No Active Transaction found for the book");
+    }
+
 }
 
